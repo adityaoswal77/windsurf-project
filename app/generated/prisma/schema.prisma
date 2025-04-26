@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  spvs      SPV[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SPV {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  status      String     @default("draft") // draft, active, closed
+  documents   Document[]
+  lps         LP[]
+  createdBy   User       @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  name      String
+  type      String // pitch_deck, legal_doc, financial_model
+  url       String
+  analysis  Json? // AI analysis results
+  spv       SPV      @relation(fields: [spvId], references: [id])
+  spvId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LP {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  status    String   @default("interested") // interested, committed, passed
+  amount    Float? // investment amount
+  spvs      SPV[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
