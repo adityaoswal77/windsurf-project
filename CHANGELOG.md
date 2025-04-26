@@ -12,6 +12,10 @@
   - Portfolio overview with value tracking
   - Vesting schedule visualization
   - Holdings table with detailed information
+- [2025-04-26 17:42] Deployed application to Netlify with production Supabase configuration
+  - Set up production environment variables
+  - Configured Netlify deployment settings
+  - Added build commands and Next.js plugin
 
 ### Changed
 
@@ -22,6 +26,10 @@
 - [2025-04-26] Improved layout structure with persistent Navbar across pages
 - [2025-04-26] Enhanced UI with consistent styling and animations
 - [2025-04-26 16:13] Decided to use Supabase for backend services instead of custom implementation
+- [2025-04-26 17:42] Updated security configuration:
+  - Added production Supabase URL and anon key
+  - Configured secure environment variables
+  - Reviewed and validated credential security
 
 ### Fixed
 
